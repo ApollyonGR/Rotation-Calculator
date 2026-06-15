@@ -30,6 +30,12 @@ def calcTime():
         parsed_shiftEndTime = datetime.strptime(shiftEndTime, timeFormat) # datetime object
     except ValueError:
         messagebox.showerror("Error", "Execution failed. Please enter a valid Shift end time.")
+    
+    shiftStartingStand = startingStand.get()
+    if shiftStartingStand not in FullRotation:
+        messagebox.showerror("Error", "Starting stand not in rotation list, please pick a valid stand.")
+    else:
+        print(shiftStartingStand)
 
     shiftTimeDifference = str(parsed_shiftEndTime - parsed_shiftStartTime)
     h, m, s = map(int, shiftTimeDifference.split(':')) # ignores s because we don't need precision at the per-second level
