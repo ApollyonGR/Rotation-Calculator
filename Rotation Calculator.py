@@ -30,27 +30,24 @@ def calcTime():
         parsed_shiftEndTime = datetime.strptime(shiftEndTime, timeFormat) # datetime object
     except ValueError:
         messagebox.showerror("Error", "Execution failed. Please enter a valid Shift end time.")
-    
-    shiftStartingStand = startingStand.get()
-    if shiftStartingStand not in FullRotation:
-        messagebox.showerror("Error", "Starting stand not in rotation list, please pick a valid stand.")
-    else:
-        print(shiftStartingStand)
 
     shiftTimeDifference = str(parsed_shiftEndTime - parsed_shiftStartTime)
     h, m, s = map(int, shiftTimeDifference.split(':')) # ignores s because we don't need precision at the per-second level
     decimal_shiftTimeDifference = h + (m / 60) # Final formatted amount of time spent at work in hours (eg 4.75)
 
+    shiftStartingStand = startingStand.get()
+    if shiftStartingStand not in FullRotation:
+        messagebox.showerror("Error", "Starting stand not in rotation list, please pick a valid stand.")
+    else:
+        totalRotations = int(decimal_shiftTimeDifference / 0.25)
+        startIndex = FullRotation.index(shiftStartingStand)
+        endIndex = ((startIndex + totalRotations) % len(FullRotation)) - 1
+        endStand = (FullRotation[endIndex])
+        
     results.config(text=f"""Shift Start: {shiftStart.get()} {shiftStartAMPM.get()}
 Shift End: {shiftEnd.get()} {shiftEndAMPM.get()}
-Total Shift Length: {decimal_shiftTimeDifference}""")
-
-def showStuff():
-    # replace this with math later, right now it's just serving as a convienent way to update the 'results' label.
-    results.config(text=
-f"""Shift Start: {shiftStart.get()} {shiftStartAMPM.get()}
-Shift End: {shiftEnd.get()} {shiftEndAMPM.get()}
-Total Shift Length: decimal_shiftTimeDifference""")
+Total Shift Length: {decimal_shiftTimeDifference:.2f}
+Ending Stand: {endStand}""")
 
 def validateTime(timeVar):
     
@@ -105,7 +102,25 @@ def toggleComp(*args):
     rebuildRotation()
 
 def toggleCompSplit(*args):
-    print("placeholder")
+    if comp_split.get():
+        comp1_checkbox.config(state="normal")
+        comp2_checkbox.config(state="normal")
+        comp3_checkbox.config(state="normal")
+        comp4_checkbox.config(state="normal")
+        comp1_checkbox.grid(row = 1, column = 2, padx=18, pady=6, sticky="w")
+        comp2_checkbox.grid(row = 1, column = 2, padx=18, pady=6, sticky="e")
+        comp3_checkbox.grid(row = 2, column = 2, padx=18, pady=6, sticky="w")
+        comp4_checkbox.grid(row = 2, column = 2, padx=18, pady=6, sticky="e")
+
+    else:
+        comp1_checkbox.config(state="disabled")
+        comp2_checkbox.config(state="disabled")
+        comp3_checkbox.config(state="disabled")
+        comp4_checkbox.config(state="disabled")
+        comp1_checkbox.grid_remove()
+        comp2_checkbox.grid_remove()
+        comp3_checkbox.grid_remove()
+        comp4_checkbox.grid_remove()
 
 def toggleSlide(*args):
     if slide_open.get():
@@ -234,12 +249,16 @@ rec_extra = tk.BooleanVar(value=False)
 comp_open = tk.BooleanVar(value=True)
 comp_split = tk.BooleanVar(value=False)
 slide_open = tk.BooleanVar(value=True)
+comp_1 = tk.BooleanVar(value=False)
+comp_2 = tk.BooleanVar(value=False)
+comp_3 = tk.BooleanVar(value=False)
+comp_4 = tk.BooleanVar(value=False)
 
 rec_open.trace_add("write", toggleRec)
 rec_split.trace_add("write", toggleRecSplit)
 rec_extra.trace_add("write", toggleRecExtra)
 comp_open.trace_add("write", toggleComp)
-#comp_split.trace_add("write", toggleCompSplit)
+comp_split.trace_add("write", toggleCompSplit)
 slide_open.trace_add("write", toggleSlide)
 
 ########################
@@ -313,7 +332,7 @@ rec_checkbox = tk.Checkbutton        (checkboxesFrame,
                          bg="white",
                          variable=rec_open)
 rec_split_checkbox = tk.Checkbutton  (checkboxesFrame,
-                         text="Rec split?",
+                         text="Rec split?  ",
                          font=("Arial", 18),
                          bg="white",
                          variable=rec_split)
@@ -328,7 +347,7 @@ comp_checkbox = tk.Checkbutton       (checkboxesFrame,
                          bg="white",
                          variable=comp_open)
 comp_split_checkbox = tk.Checkbutton (checkboxesFrame,
-                         text="Comp split?",
+                         text="Comp split?  ",
                          font=("Arial", 18),
                          bg="white",
                          variable=comp_split)
@@ -337,6 +356,26 @@ slide_checkbox = tk.Checkbutton      (checkboxesFrame,
                          font=("Arial", 18),
                          bg="white",
                          variable=slide_open)
+comp1_checkbox = tk.Checkbutton      (checkboxesFrame,
+                         text="1  ",
+                         font=("Arial", 18),
+                         bg="white",
+                         variable=comp_1)
+comp2_checkbox = tk.Checkbutton      (checkboxesFrame,
+                         text="2  ",
+                         font=("Arial", 18),
+                         bg="white",
+                         variable=comp_2)
+comp3_checkbox = tk.Checkbutton      (checkboxesFrame,
+                         text="3  ",
+                         font=("Arial", 18),
+                         bg="white",
+                         variable=comp_3)
+comp4_checkbox = tk.Checkbutton      (checkboxesFrame,
+                         text="4  ",
+                         font=("Arial", 18),
+                         bg="white",
+                         variable=comp_4)
 
 # Checkboxes packing
 rec_checkbox.grid        (row = 0, column = 0, padx=6, pady=6, sticky="w")
@@ -410,7 +449,7 @@ toggleRec()
 toggleRecSplit()
 toggleRecExtra()
 toggleComp()
-#toggleCompSplit()
+toggleCompSplit()
 toggleSlide()
 
 root.mainloop()
