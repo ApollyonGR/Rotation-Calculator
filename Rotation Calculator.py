@@ -47,7 +47,7 @@ def calcTime():
     results.config(text=f"""Shift Start: {shiftStart.get()} {shiftStartAMPM.get()}
 Shift End: {shiftEnd.get()} {shiftEndAMPM.get()}
 Total Shift Length: {decimal_shiftTimeDifference:.2f}
-Ending Stand: {endStand}""")
+If you go out to {shiftStartingStand} at {shiftStartTime} you'll end on {endStand}""")
 
 def validateTime(timeVar):
     
@@ -134,7 +134,17 @@ def rebuildRotation(*args):
     global FullRotation
     new_rotation = []
     if comp_open.get():
-        new_rotation.extend(CompStands)
+        if comp_split.get():
+            if comp_1.get():
+                new_rotation.append("Comp 1")
+            if comp_2.get():
+                new_rotation.append("Comp 2")
+            if comp_3.get():
+                new_rotation.append("Comp 3")
+            if comp_4.get():
+                new_rotation.append("Comp 4")
+        else:
+            new_rotation.extend(CompStands)
         try:
             compBreaksNum = int(compBreaks.get())
             for i in range(1, (compBreaksNum + 1)): # +1 makes sure it gets the last break too
