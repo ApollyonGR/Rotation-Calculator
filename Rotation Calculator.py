@@ -193,7 +193,6 @@ def rebuildRotation(*args):
     FullRotation = new_rotation
     startingStand.config(values=FullRotation) # Just refetches the value of FullRotation
 
-#def doMath
 
 ######################
 ### Initialization ###
@@ -201,37 +200,31 @@ def rebuildRotation(*args):
 
 root = tk.Tk()
 root.title("Test")
-root.geometry("900x900+125+250")
+root.geometry("480x320")
 
 container = tk.Frame(root)
 container.pack(expand=True) 
 
+# Styles
+style = ttk.Style()
+style.configure("Standard.TFrame", background="white", borderwidth=2, relief="groove")
+style.configure("Arial18.TLabel", background="white", font=("Arial", 18))
+style.configure("Arial18B.TLabel", background="white", font=("Arial", 18, "bold"))
+style.configure("Arial15B.TLabel", background="white", font=("Arial", 15, "bold"))
+style.configure("Standard.TCheckbutton", background="white", font=("Arial", 18))
+style.configure("Standard.TRadiobutton", background="white")
+style.configure("Calc.TButton", font=("Arial", 18), background="lightgreen")
+
 # Frames
-checkboxesFrame = tk.Frame (container,
-                    bg="white",
-                    bd=2,
-                    relief="groove")
-whenStartFrame = tk.Frame  (container,
-                    bg="white",
-                    bd=2,
-                    relief="groove")
-whereStartFrame = tk.Frame (container,
-                    bg="white",
-                    bd=2,
-                    relief="groove")
-breaksFrame = tk.Frame     (container,
-                    bg="white",
-                    bd=2,
-                    relief="groove")
-calculateFrame = tk.Button (container,
-                    bg="lightgreen",
+checkboxesFrame = ttk.Frame (container, style="Standard.TFrame")
+whenStartFrame = ttk.Frame  (container, style="Standard.TFrame")
+whereStartFrame = ttk.Frame (container, style="Standard.TFrame")
+breaksFrame = ttk.Frame     (container, style="Standard.TFrame")
+calculateFrame = ttk.Button (container,
+                    style="Calc.TButton",
                     text="Calculate",
-                    font=("Arial", 18),
                     command=calcTime)
-resultsFrame = tk.Frame (container,
-                    bg="white",
-                    bd=2,
-                    relief="groove")
+resultsFrame = ttk.Frame (container, style="Standard.TFrame")
 
 # Frame grid
 whenStartFrame.grid  (row = 0, column = 0, padx = 6, pady = 6)
@@ -276,51 +269,53 @@ slide_open.trace_add("write", toggleSlide)
 ########################
 
 # Shift time entry boxes
-shiftStart = tk.Entry      (whenStartFrame,
+shiftStart = ttk.Entry      (whenStartFrame,
                         textvariable = shiftStart,
                         font = ("Arial", 18),
                         width=5,
                         validate="key",
                         validatecommand=(vmcd, "%P"))
-shiftEnd = tk.Entry        (whenStartFrame,
+shiftEnd = ttk.Entry        (whenStartFrame,
                         textvariable = shiftEnd,
                         font = ("Arial", 18),
                         width=5,
                         validate="key",
                         validatecommand=(vmcd, "%P"))
-shiftStartLabel = tk.Label (whenStartFrame,
+shiftStartLabel = ttk.Label (whenStartFrame,
                         text = "Shift start: ",
-                        font = ("Arial", 18, 'bold'),
-                        bg="white")
-shiftEndLabel = tk.Label   (whenStartFrame,
+                        style="Arial18B.TLabel")
+shiftEndLabel = ttk.Label   (whenStartFrame,
                         text = "Shift end: ",
-                        font = ("Arial", 18, 'bold'),
-                        bg="white")
+                        style="Arial18B.TLabel")
 
 shiftStartAMPM = tk.StringVar(value="AM")
 shiftEndAMPM =   tk.StringVar(value="PM")
 
 # AM/PM radio buttons
-rb1am = tk.Radiobutton(
+rb1am = ttk.Radiobutton(
     whenStartFrame,
     text = "AM",
     variable = shiftStartAMPM,
-    value = "AM")
-rb1pm = tk.Radiobutton(
+    value = "AM",
+    style="Standard.TRadiobutton")
+rb1pm = ttk.Radiobutton(
     whenStartFrame,
     text = "PM",
     variable = shiftStartAMPM,
-    value = "PM")
-rb2am = tk.Radiobutton(
+    value = "PM",
+    style="Standard.TRadiobutton")
+rb2am = ttk.Radiobutton(
     whenStartFrame,
     text = "AM",
     variable = shiftEndAMPM,
-    value = "AM")
-rb2pm = tk.Radiobutton(
+    value = "AM",
+    style="Standard.TRadiobutton")
+rb2pm = ttk.Radiobutton(
     whenStartFrame,
     text = "PM",
     variable = shiftEndAMPM,
-    value = "PM")
+    value = "PM",
+    style="Standard.TRadiobutton")
 
 # Shift grid
 shiftStart.grid(        row = 0, column = 1, padx = 6, pady = 6)
@@ -336,55 +331,45 @@ rb2pm.grid(             row = 1, column = 3, padx = 6, pady = 6)
 ### Stand Checkboxes ###
 ########################
 
-rec_checkbox = tk.Checkbutton        (checkboxesFrame,
+rec_checkbox = ttk.Checkbutton        (checkboxesFrame,
                          text="Rec open?",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=rec_open)
-rec_split_checkbox = tk.Checkbutton  (checkboxesFrame,
+rec_split_checkbox = ttk.Checkbutton  (checkboxesFrame,
                          text="Rec split?  ",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=rec_split)
-rec_extra_checkbox = tk.Checkbutton  (checkboxesFrame,
+rec_extra_checkbox = ttk.Checkbutton  (checkboxesFrame,
                          text="Rec extra?",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=rec_extra)
-comp_checkbox = tk.Checkbutton       (checkboxesFrame,
+comp_checkbox = ttk.Checkbutton       (checkboxesFrame,
                          text="Comp open?",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=comp_open)
-comp_split_checkbox = tk.Checkbutton (checkboxesFrame,
+comp_split_checkbox = ttk.Checkbutton (checkboxesFrame,
                          text="Comp split?  ",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=comp_split)
-slide_checkbox = tk.Checkbutton      (checkboxesFrame,
+slide_checkbox = ttk.Checkbutton      (checkboxesFrame,
                          text="Slide open?",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=slide_open)
-comp1_checkbox = tk.Checkbutton      (checkboxesFrame,
+comp1_checkbox = ttk.Checkbutton      (checkboxesFrame,
                          text="1  ",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=comp_1)
-comp2_checkbox = tk.Checkbutton      (checkboxesFrame,
+comp2_checkbox = ttk.Checkbutton      (checkboxesFrame,
                          text="2  ",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=comp_2)
-comp3_checkbox = tk.Checkbutton      (checkboxesFrame,
+comp3_checkbox = ttk.Checkbutton      (checkboxesFrame,
                          text="3  ",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=comp_3)
-comp4_checkbox = tk.Checkbutton      (checkboxesFrame,
+comp4_checkbox = ttk.Checkbutton      (checkboxesFrame,
                          text="4  ",
-                         font=("Arial", 18),
-                         bg="white",
+                         style="Standard.TCheckbutton",
                          variable=comp_4)
 
 # Checkboxes packing
@@ -399,28 +384,22 @@ slide_checkbox.grid      (row = 0, column = 2, padx=6, pady=6, sticky="w")
 ### "Breaks after X" ###
 ########################
 
-breaksFrameLabel = tk.Label(breaksFrame, 
+breaksFrameLabel = ttk.Label(breaksFrame, 
                             text="How many breaks after X?", 
-                            font=("Arial", "18"), 
-                            padx = 6, 
-                            pady = 6, 
-                            bg="white")
-recBreaksLabel = tk.Label(breaksFrame, 
+                            style="Arial18.TLabel",
+                            padding=(6,6))
+recBreaksLabel = ttk.Label(breaksFrame, 
                           text="Rec",
-                          font = ("Arial", 15, "bold"), 
-                          bg="white")
-recSplitBreaksLabel = tk.Label(breaksFrame, 
+                          style="Arial15B.TLabel")
+recSplitBreaksLabel = ttk.Label(breaksFrame, 
                           text="Split",
-                          font = ("Arial", 15, "bold"), 
-                          bg="white")
-compBreaksLabel = tk.Label(breaksFrame, 
+                          style="Arial15B.TLabel")
+compBreaksLabel = ttk.Label(breaksFrame, 
                           text="Comp",
-                          font = ("Arial", 15, "bold"), 
-                          bg="white")
-slideBreaksLabel = tk.Label(breaksFrame, 
+                          style="Arial15B.TLabel")
+slideBreaksLabel = ttk.Label(breaksFrame, 
                           text="Slide",
-                          font = ("Arial", 15, "bold"), 
-                          bg="white")
+                          style="Arial15B.TLabel")
 
 breaksFrameLabel.grid        (row = 0, column = 0, padx = 6, pady = 6, columnspan=4, sticky="nesw")
 recBreaks = ttk.Spinbox      (breaksFrame, from_=0, to=4, width=5, font=("Arial", 12), textvariable=recBreakCount)
@@ -432,10 +411,9 @@ slideBreaks = ttk.Spinbox    (breaksFrame, from_=0, to=4, width=5, font=("Arial"
 ### Starting location ###
 #########################
 
-startingStandLabel = tk.Label(whereStartFrame,
+startingStandLabel = ttk.Label(whereStartFrame,
                               text = "Where do you start?",
-                              font=("Arial", 18),
-                              bg="white")
+                              style="Arial18.TLabel")
 startingStand = ttk.Combobox(whereStartFrame, values=FullRotation, postcommand=rebuildRotation)
 startingStandLabel.pack(padx = 6, pady = 6)
 startingStand.pack(padx = 6, pady = 12)
@@ -444,11 +422,10 @@ startingStand.pack(padx = 6, pady = 12)
 ### Viewing Results ###
 #######################
 
-results = tk.Label(resultsFrame, 
+results = ttk.Label(resultsFrame, 
                    text=f""" """,
-                   font=("Arial", 18),
-                   justify="left",
-                   bg="white")
+                   style="Arial18.TLabel",
+                   justify="left")
 results.grid(row = 0, column = 0, padx = 6, pady = 6)
 
 ###################
