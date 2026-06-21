@@ -2,11 +2,6 @@
 # marc rotation calc
 ##
 
-## TO DO: 
-##
-## 1) Add math
-## 3) add dropdown menu for comp stands if comp split is checked
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime
@@ -65,8 +60,8 @@ def toggleRec(*args):
         rec_split_checkbox.config(state="normal") # Open the rec split checkbox
         rec_extra_checkbox.config(state="normal")
         slide_checkbox.config(state="normal")
-        recBreaksLabel.grid      (row = 1, column = 0, padx = 6, pady = 6, sticky="e")
-        recBreaks.grid           (row = 1, column = 1, padx = 6, pady = 6, sticky="e")
+        recBreaksLabel.grid      (row = 1, column = 0, padx = 3, pady = 3, sticky="e")
+        recBreaks.grid           (row = 1, column = 1, padx = 3, pady = 3, sticky="e")
     else:
         rec_split.set(False) # turn the rec split checkbox to off 
         rec_extra.set(False) 
@@ -80,8 +75,8 @@ def toggleRec(*args):
 
 def toggleRecSplit(*args):
     if rec_split.get():
-        recSplitBreaksLabel.grid (row = 2, column = 0, padx = 6, pady = 6, sticky="e")
-        recSplitBreaks.grid      (row = 2, column = 1, padx = 6, pady = 6, sticky="e")
+        recSplitBreaksLabel.grid (row = 2, column = 0, padx = 3, pady = 3, sticky="e")
+        recSplitBreaks.grid      (row = 2, column = 1, padx = 3, pady = 3, sticky="e")
     else:
         recSplitBreaksLabel.grid_remove()
         recSplitBreaks.grid_remove()
@@ -92,8 +87,8 @@ def toggleRecExtra(*args):
 def toggleComp(*args):
     if comp_open.get():
         comp_split_checkbox.config(state="normal")
-        compBreaksLabel.grid     (row = 1, column = 2, padx = 6, pady = 6, sticky="w")
-        compBreaks.grid          (row = 1, column = 3, padx = 6, pady = 6, sticky="w")
+        compBreaksLabel.grid     (row = 1, column = 2, padx = 3, pady = 3, sticky="w")
+        compBreaks.grid          (row = 1, column = 3, padx = 3, pady = 3, sticky="w")
     else:
         comp_split.set(False)
         comp_split_checkbox.config(state="disabled")
@@ -107,10 +102,10 @@ def toggleCompSplit(*args):
         comp2_checkbox.config(state="normal")
         comp3_checkbox.config(state="normal")
         comp4_checkbox.config(state="normal")
-        comp1_checkbox.grid(row = 1, column = 2, padx=18, pady=6, sticky="w")
-        comp2_checkbox.grid(row = 1, column = 2, padx=18, pady=6, sticky="e")
-        comp3_checkbox.grid(row = 2, column = 2, padx=18, pady=6, sticky="w")
-        comp4_checkbox.grid(row = 2, column = 2, padx=18, pady=6, sticky="e")
+        comp1_checkbox.grid(row = 3, column = 0, padx=6, pady=6, sticky="w")
+        comp2_checkbox.grid(row = 3, column = 0, padx=6, pady=6, sticky="e")
+        comp3_checkbox.grid(row = 3, column = 1, padx=6, pady=6, sticky="w")
+        comp4_checkbox.grid(row = 3, column = 1, padx=6, pady=6, sticky="e")
 
     else:
         comp1_checkbox.config(state="disabled")
@@ -124,8 +119,8 @@ def toggleCompSplit(*args):
 
 def toggleSlide(*args):
     if slide_open.get():
-        slideBreaksLabel.grid    (row = 2, column = 2, padx = 6, pady = 6, sticky="w")
-        slideBreaks.grid         (row = 2, column = 3, padx = 6, pady = 6, sticky="w")
+        slideBreaksLabel.grid    (row = 2, column = 2, padx = 3, pady = 3, sticky="w")
+        slideBreaks.grid         (row = 2, column = 3, padx = 3, pady = 3, sticky="w")
     else:
         slideBreaksLabel.grid_remove()
         slideBreaks.grid_remove()
@@ -193,7 +188,6 @@ def rebuildRotation(*args):
     FullRotation = new_rotation
     startingStand.config(values=FullRotation) # Just refetches the value of FullRotation
 
-
 ######################
 ### Initialization ###
 ######################
@@ -208,31 +202,28 @@ container.pack(expand=True)
 # Styles
 style = ttk.Style()
 style.configure("Standard.TFrame", background="white", borderwidth=2, relief="groove")
-style.configure("Arial18.TLabel", background="white", font=("Arial", 18))
-style.configure("Arial18B.TLabel", background="white", font=("Arial", 18, "bold"))
-style.configure("Arial15B.TLabel", background="white", font=("Arial", 15, "bold"))
-style.configure("Standard.TCheckbutton", background="white", font=("Arial", 18))
+style.configure("Arial13.TLabel", background="white", font=("Arial", 13))
+style.configure("Arial13B.TLabel", background="white", font=("Arial", 13, "bold"))
+style.configure("Arial10B.TLabel", background="white", font=("Arial", 10, "bold"))
+style.configure("Standard.TCheckbutton", background="white", font=("Arial", 13))
 style.configure("Standard.TRadiobutton", background="white")
-style.configure("Calc.TButton", font=("Arial", 18), background="lightgreen")
+style.configure("Calc.TButton", font=("Arial", 13), background="lightgreen")
 
 # Frames
 checkboxesFrame = ttk.Frame (container, style="Standard.TFrame")
 whenStartFrame = ttk.Frame  (container, style="Standard.TFrame")
 whereStartFrame = ttk.Frame (container, style="Standard.TFrame")
 breaksFrame = ttk.Frame     (container, style="Standard.TFrame")
-calculateFrame = ttk.Button (container,
-                    style="Calc.TButton",
-                    text="Calculate",
-                    command=calcTime)
-resultsFrame = ttk.Frame (container, style="Standard.TFrame")
+calculateFrame = ttk.Button (container, style="Calc.TButton", text="Calculate", command=calcTime)
+resultsFrame = ttk.Frame    (container, style="Standard.TFrame")
 
 # Frame grid
-whenStartFrame.grid  (row = 0, column = 0, padx = 6, pady = 6)
-checkboxesFrame.grid (row = 1, column = 0, padx = 6, pady = 6)
-breaksFrame.grid     (row = 2, column = 0, padx = 6, pady = 6)
-whereStartFrame.grid (row = 3, column = 0, padx = 6, pady = 6)
-calculateFrame.grid  (row = 4, column = 0, padx = 6, pady = 6)
-resultsFrame.grid    (row = 1, column = 1, padx = 6, pady = 6, rowspan=2)
+whenStartFrame.grid  (row = 0, column = 0, padx = 3, pady = 3)
+checkboxesFrame.grid (row = 1, column = 0, padx = 3, pady = 3)
+breaksFrame.grid     (row = 0, column = 1, padx = 3, pady = 3)
+whereStartFrame.grid (row = 1, column = 1, padx = 3, pady = 3)
+calculateFrame.grid  (row = 4, column = 0, padx = 3, pady = 3)
+resultsFrame.grid    (row = 2, column = 1, padx = 3, pady = 3)
 
 rotationTime = tk.IntVar(value=15)
 shiftStart = tk.StringVar()
@@ -271,22 +262,22 @@ slide_open.trace_add("write", toggleSlide)
 # Shift time entry boxes
 shiftStart = ttk.Entry      (whenStartFrame,
                         textvariable = shiftStart,
-                        font = ("Arial", 18),
+                        font = ("Arial", 10),
                         width=5,
                         validate="key",
                         validatecommand=(vmcd, "%P"))
 shiftEnd = ttk.Entry        (whenStartFrame,
                         textvariable = shiftEnd,
-                        font = ("Arial", 18),
+                        font = ("Arial", 10),
                         width=5,
                         validate="key",
                         validatecommand=(vmcd, "%P"))
 shiftStartLabel = ttk.Label (whenStartFrame,
                         text = "Shift start: ",
-                        style="Arial18B.TLabel")
+                        style="Arial13B.TLabel")
 shiftEndLabel = ttk.Label   (whenStartFrame,
                         text = "Shift end: ",
-                        style="Arial18B.TLabel")
+                        style="Arial13B.TLabel")
 
 shiftStartAMPM = tk.StringVar(value="AM")
 shiftEndAMPM =   tk.StringVar(value="PM")
@@ -318,14 +309,14 @@ rb2pm = ttk.Radiobutton(
     style="Standard.TRadiobutton")
 
 # Shift grid
-shiftStart.grid(        row = 0, column = 1, padx = 6, pady = 6)
-shiftEnd.grid(          row = 1, column = 1, padx = 6, pady = 6)
-shiftStartLabel.grid(   row = 0, column = 0, padx = 6, pady = 6)
-shiftEndLabel.grid(     row = 1, column = 0, padx = 6, pady = 6)
-rb1am.grid(             row = 0, column = 2, padx = 6, pady = 6)
-rb1pm.grid(             row = 0, column = 3, padx = 6, pady = 6)
-rb2am.grid(             row = 1, column = 2, padx = 6, pady = 6)
-rb2pm.grid(             row = 1, column = 3, padx = 6, pady = 6)
+shiftStart.grid(        row = 0, column = 1, padx = 3, pady = 3)
+shiftEnd.grid(          row = 1, column = 1, padx = 3, pady = 3)
+shiftStartLabel.grid(   row = 0, column = 0, padx = 3, pady = 3)
+shiftEndLabel.grid(     row = 1, column = 0, padx = 3, pady = 3)
+rb1am.grid(             row = 0, column = 2, padx = 3, pady = 3)
+rb1pm.grid(             row = 0, column = 3, padx = 3, pady = 3)
+rb2am.grid(             row = 1, column = 2, padx = 3, pady = 3)
+rb2pm.grid(             row = 1, column = 3, padx = 3, pady = 3)
 
 ########################
 ### Stand Checkboxes ###
@@ -373,12 +364,12 @@ comp4_checkbox = ttk.Checkbutton      (checkboxesFrame,
                          variable=comp_4)
 
 # Checkboxes packing
-rec_checkbox.grid        (row = 0, column = 0, padx=6, pady=6, sticky="w")
-rec_split_checkbox.grid  (row = 1, column = 0, padx=6, pady=6, sticky="w")
-rec_extra_checkbox.grid  (row = 2, column = 0, padx=6, pady=6, sticky="w")
-comp_checkbox.grid       (row = 0, column = 1, padx=6, pady=6, sticky="w")
-comp_split_checkbox.grid (row = 1, column = 1, padx=6, pady=6, sticky="w") 
-slide_checkbox.grid      (row = 0, column = 2, padx=6, pady=6, sticky="w")
+rec_checkbox.grid        (row = 0, column = 0, padx=3, pady=2, sticky="w")
+rec_split_checkbox.grid  (row = 1, column = 0, padx=3, pady=2, sticky="w")
+rec_extra_checkbox.grid  (row = 2, column = 0, padx=3, pady=2, sticky="w")
+comp_checkbox.grid       (row = 0, column = 1, padx=3, pady=2, sticky="w")
+comp_split_checkbox.grid (row = 1, column = 1, padx=3, pady=2, sticky="w") 
+slide_checkbox.grid      (row = 2, column = 1, padx=3, pady=2, sticky="w")
 
 ########################
 ### "Breaks after X" ###
@@ -386,26 +377,26 @@ slide_checkbox.grid      (row = 0, column = 2, padx=6, pady=6, sticky="w")
 
 breaksFrameLabel = ttk.Label(breaksFrame, 
                             text="How many breaks after X?", 
-                            style="Arial18.TLabel",
+                            style="Arial13.TLabel",
                             padding=(6,6))
 recBreaksLabel = ttk.Label(breaksFrame, 
                           text="Rec",
-                          style="Arial15B.TLabel")
+                          style="Arial10B.TLabel")
 recSplitBreaksLabel = ttk.Label(breaksFrame, 
                           text="Split",
-                          style="Arial15B.TLabel")
+                          style="Arial10B.TLabel")
 compBreaksLabel = ttk.Label(breaksFrame, 
                           text="Comp",
-                          style="Arial15B.TLabel")
+                          style="Arial10B.TLabel")
 slideBreaksLabel = ttk.Label(breaksFrame, 
                           text="Slide",
-                          style="Arial15B.TLabel")
+                          style="Arial10B.TLabel")
 
-breaksFrameLabel.grid        (row = 0, column = 0, padx = 6, pady = 6, columnspan=4, sticky="nesw")
-recBreaks = ttk.Spinbox      (breaksFrame, from_=0, to=4, width=5, font=("Arial", 12), textvariable=recBreakCount)
-recSplitBreaks = ttk.Spinbox (breaksFrame, from_=0, to=4, width=5, font=("Arial", 12), textvariable=recSplitBreakCount)
-compBreaks = ttk.Spinbox     (breaksFrame, from_=0, to=4, width=5, font=("Arial", 12), textvariable=compBreakCount)
-slideBreaks = ttk.Spinbox    (breaksFrame, from_=0, to=4, width=5, font=("Arial", 12), textvariable=slideBreakCount)
+breaksFrameLabel.grid        (row = 0, column = 0, padx = 3, pady = 3, columnspan=4, sticky="nesw")
+recBreaks = ttk.Spinbox      (breaksFrame, from_=0, to=4, width=5, font=("Arial", 10), textvariable=recBreakCount)
+recSplitBreaks = ttk.Spinbox (breaksFrame, from_=0, to=4, width=5, font=("Arial", 10), textvariable=recSplitBreakCount)
+compBreaks = ttk.Spinbox     (breaksFrame, from_=0, to=4, width=5, font=("Arial", 10), textvariable=compBreakCount)
+slideBreaks = ttk.Spinbox    (breaksFrame, from_=0, to=4, width=5, font=("Arial", 10), textvariable=slideBreakCount)
 
 #########################
 ### Starting location ###
@@ -413,9 +404,9 @@ slideBreaks = ttk.Spinbox    (breaksFrame, from_=0, to=4, width=5, font=("Arial"
 
 startingStandLabel = ttk.Label(whereStartFrame,
                               text = "Where do you start?",
-                              style="Arial18.TLabel")
+                              style="Arial13.TLabel")
 startingStand = ttk.Combobox(whereStartFrame, values=FullRotation, postcommand=rebuildRotation)
-startingStandLabel.pack(padx = 6, pady = 6)
+startingStandLabel.pack(padx = 3, pady = 3)
 startingStand.pack(padx = 6, pady = 12)
 
 #######################
@@ -424,9 +415,9 @@ startingStand.pack(padx = 6, pady = 12)
 
 results = ttk.Label(resultsFrame, 
                    text=f""" """,
-                   style="Arial18.TLabel",
+                   style="Arial13.TLabel",
                    justify="left")
-results.grid(row = 0, column = 0, padx = 6, pady = 6)
+results.grid(row = 0, column = 0, padx = 3, pady = 3)
 
 ###################
 ### Run Program ###
