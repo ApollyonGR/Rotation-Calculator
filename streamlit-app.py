@@ -8,13 +8,13 @@ SLIDE_STANDS = ["Top Slide", "Bottom Slide"]
 
 # Set up page config
 st.set_page_config(page_title="Lifeguard Rotation Calculator", layout="centered")
-st.title("🛟 Lifeguard Rotation Calculator")
+st.title("Lifeguard Rotation Calculator")
 
 # --- UI Layout using Columns ---
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("⏱️ Shift Times")
+    st.subheader("Shift Times")
     # Time entry layout
     t_start_col, ampm_start_col = st.columns([2, 1])
     with t_start_col:
@@ -29,7 +29,7 @@ with col1:
         shift_end_ampm = st.selectbox("AM/PM", ["AM", "PM"], key="end_ampm", index=1)
 
 with col2:
-    st.subheader("⚙️ Rotation Options")
+    st.subheader("Rotation Options")
     rec_open = st.checkbox("Rec open?", value=True)
     
     # Conditional sub-options for Rec
@@ -64,7 +64,7 @@ with col2:
 st.write("---")
 
 # --- Dynamic Break Spinboxes ---
-st.subheader("☕ Breaks After Stands")
+st.subheader("Breaks After Stands")
 b_col1, b_col2, b_col3, b_col4 = st.columns(4)
 
 with b_col1:
@@ -113,7 +113,7 @@ if slide_open:
 st.write("---")
 
 # --- Starting Location & Calculation ---
-st.subheader("📍 Deployment")
+st.subheader("Deployment")
 starting_stand = st.selectbox("Which stand are you starting on?", options=full_rotation if full_rotation else ["No active stands"])
 
 if st.button("Calculate Rotation", type="primary"):
@@ -152,7 +152,7 @@ if st.button("Calculate Rotation", type="primary"):
                     * **Shift End:** {shift_end_time}
                     * **Total Shift Length:** {decimal_time:.2f} hours ({total_rotations} intervals)
                     
-                    👉 If you go out to **{starting_stand}** at **{shift_start_time}**, you'll end your shift on **{end_stand}**.
+                    * If you go out to **{starting_stand}** at **{shift_start_time}**, you'll end your shift on **{end_stand}**.
                     """)
                     
         except ValueError:

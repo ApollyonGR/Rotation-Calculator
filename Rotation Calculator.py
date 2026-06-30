@@ -48,8 +48,6 @@ def calcTime():
         endIndex = ((startIndex + totalRotations) % len(FullRotation)) - 1
         endStand = (FullRotation[endIndex])
 
-    results = ttk.Label(resultsFrame)
-    results.grid(row = 0, column = 0, padx = 6, pady = 6)    
     results.config(style="Arial18.TLabel", text=f"""Shift Start: {shiftStart.get()} {shiftStartAMPM.get()}
 Shift End: {shiftEnd.get()} {shiftEndAMPM.get()}
 Total Shift Length: {decimal_shiftTimeDifference:.2f}
@@ -245,14 +243,22 @@ breaksFrame.grid_propagate(0)
 checkboxesFrame.grid_propagate(0)
 whereStartFrame.grid_propagate(0)
 
-whenStartFrame.grid_columnconfigure([0,1,2,3], weight=1)
-whenStartFrame.grid_rowconfigure([0,1], weight=1)
-breaksFrame.grid_columnconfigure([0,1,2,3], weight=1)
-breaksFrame.grid_rowconfigure([0,1,2], weight=1)
-checkboxesFrame.grid_columnconfigure([0,1,2,3], weight=1)
-checkboxesFrame.grid_rowconfigure([0,1,2], weight=1)
-whereStartFrame.grid_columnconfigure([0], weight=1)
-whereStartFrame.grid_rowconfigure([0,1], weight=1)
+for col in range(4):
+    whenStartFrame.grid_columnconfigure(col, weight=1)
+for row in range(2):
+    whenStartFrame.grid_rowconfigure(row, weight=1)
+for col in range(4):
+    breaksFrame.grid_columnconfigure(col, weight=1)
+for row in range(3):
+    breaksFrame.grid_rowconfigure(row, weight=1)
+for col in range(4):
+    checkboxesFrame.grid_columnconfigure(col, weight=1)
+for row in range(3):
+    checkboxesFrame.grid_rowconfigure(row, weight=1)
+for col in range(1):
+    whereStartFrame.grid_columnconfigure(col, weight=1)
+for row in range(2):
+    whereStartFrame.grid_rowconfigure(row, weight=1)
 
 calculateFrame.grid  (row = 2, column = 0, padx = 6, pady = 6, columnspan=2)
 resultsFrame.grid    (row = 3, column = 0, padx = 6, pady = 6, columnspan=2)
@@ -260,10 +266,8 @@ resultsFrame.grid    (row = 3, column = 0, padx = 6, pady = 6, columnspan=2)
 ############################
 ### Variables and Traces ###
 ############################
-rotationTime = tk.IntVar(value=15)
 shiftStart = tk.StringVar()
 shiftEnd = tk.StringVar()
-shiftLength = tk.DoubleVar() # in hours
 
 compBreakCount = tk.StringVar(value="2")
 recBreakCount = tk.StringVar(value="2")
@@ -443,7 +447,8 @@ startingStand.grid(row=1, column=0, padx = 6, pady = 6)
 #######################
 ### Viewing Results ###
 #######################
-
+results = ttk.Label(resultsFrame)
+results.grid(row = 0, column = 0, padx = 6, pady = 6)    
 
 ###################
 ### Run Program ###
@@ -456,5 +461,4 @@ toggleComp()
 toggleCompSplit()
 toggleSlide()
 
-root.bind("<Configure>", onresize)
 root.mainloop()
