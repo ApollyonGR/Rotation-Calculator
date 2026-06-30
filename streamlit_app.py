@@ -30,35 +30,42 @@ with col1:
 
 with col2:
     st.subheader("Rotation Options")
-    rec_open = st.checkbox("Rec open?", value=True)
     
-    # Conditional sub-options for Rec
+    sub_col1, sub_col2, sub_col3 = st.columns(3)
+    with sub_col1:
+        rec_open = st.checkbox("Rec open?", value=True)
     rec_split = False
     rec_extra = False
     if rec_open:
-        sub_col1, sub_col2 = st.columns(2)
-        with sub_col1:
-            rec_split = st.checkbox("Rec split?", value=True)
         with sub_col2:
+            rec_split = st.checkbox("Rec split?", value=True)
+        with sub_col3:
             rec_extra = st.checkbox("Rec extra?", value=False)
             
     comp_open = st.checkbox("Comp open?", value=True)
-    
-    # Conditional sub-options for Comp
     comp_split = False
     if comp_open:
-        comp_split = st.checkbox("Comp split?", value=False)
+        r1_col1, r1_col2, r1_col3, r1_col4, r1_col5 = st.columns([4, 2, 2, 2, 2])
+        with r1_col1:
+            comp_split = st.checkbox("Comp split?", value=False)
         if comp_split:
-            st.caption("Select Active Comp Stands:")
+            with r1_col2:
+                comp_1 = st.checkbox("1", value=False)
+            with r1_col3:
+                comp_2 = st.checkbox("2", value=False)
+            with r1_col4:
+                comp_3 = st.checkbox("3", value=False)
+            with r1_col5:
+                comp_4 = st.checkbox("4", value=False)
             comp_selections = {
-                "Comp 1": st.checkbox("1", value=False),
-                "Comp 2": st.checkbox("2", value=False),
-                "Comp 3": st.checkbox("3", value=False),
-                "Comp 4": st.checkbox("4", value=False),
+                "Comp 1": comp_1,
+                "Comp 2": comp_2,
+                "Comp 3": comp_3,
+                "Comp 4": comp_4,
             }
 
     slide_open = False
-    if rec_open: # Slide option only shows if rec is open based on your original logic
+    if rec_open:  
         slide_open = st.checkbox("Slide open?", value=True)
 
 st.write("---")
@@ -87,7 +94,6 @@ if comp_open:
                 full_rotation.append(stand)
     else:
         full_rotation.extend(COMP_STANDS)
-        
     for i in range(1, comp_break_count + 1):
         full_rotation.append(f"Comp Break {i}")
 
@@ -113,7 +119,7 @@ if slide_open:
 st.write("---")
 
 # --- Starting Location & Calculation ---
-st.subheader("Deployment")
+st.subheader("Starting Stand")
 starting_stand = st.selectbox("Which stand are you starting on?", options=full_rotation if full_rotation else ["No active stands"])
 
 if st.button("Calculate Rotation", type="primary"):
@@ -150,7 +156,7 @@ if st.button("Calculate Rotation", type="primary"):
                     st.info(f"""
                     * **Shift Start:** {shift_start_time}
                     * **Shift End:** {shift_end_time}
-                    * **Total Shift Length:** {decimal_time:.2f} hours ({total_rotations} intervals)
+                    * **Total Shift Length:** {decimal_time:.2f} hours ({total_rotations} rotations)
                     
                     * If you go out to **{starting_stand}** at **{shift_start_time}**, you'll end your shift on **{end_stand}**.
                     """)
